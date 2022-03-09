@@ -466,53 +466,7 @@
 
         </div>
     </div>
-    <script>
-        function set(location, data) {
-            localStorage.setItem(location, data)
-            return localStorage.getItem(location)
-        }
 
-        function seti(location, data) {
-            localStorage.setItem(location, data)
-        }
-
-        function get(location) {
-            return localStorage.getItem(location)
-        }
-        const {
-            key
-        } = getUrlParams(location.search);
-        if (key) {
-
-        }
-
-        function getUrlParams(urlOrQueryString) {
-            if ((i = urlOrQueryString.indexOf('?')) >= 0) {
-                const queryString = urlOrQueryString.substring(i + 1);
-                if (queryString) {
-                    return _mapUrlParams(queryString);
-                }
-            }
-
-            return {};
-        }
-
-        function _mapUrlParams(queryString) {
-            return queryString
-                .split('&')
-                .map(function(keyValueString) {
-                    return keyValueString.split('=')
-                })
-                .reduce(function(urlParams, [key, value]) {
-                    if (Number.isInteger(parseInt(value)) && parseInt(value) == value) {
-                        urlParams[key] = parseInt(value);
-                    } else {
-                        urlParams[key] = decodeURI(value);
-                    }
-                    return urlParams;
-                }, {});
-        }
-    </script>
     <script>
         /// toggal click for page fadein and hide on the click trigger//
 
