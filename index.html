@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>buybani</title>
+    <script src="/scripts/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/scripts/database.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+         :root {
+            --f1: 'Fredoka', sans-serif;
+        }
+        
+        body {
+            margin: unset;
+            font-family: var(--f1);
+            font-weight: 300;
+        }
+        
+        h1 {
+            font-weight: 400;
+            margin: unset;
+            line-height: 2rem;
+            font-size: 1.5rem;
+            letter-spacing: 0px;
+            width: fit-content;
+        }
+        
+        header {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: center;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 10px;
+            gap: 5px;
+            background: #4c5a88;
+            color: white;
+            padding-bottom: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .shopping_cart::after {
+            content: var(--count);
+            position: absolute;
+            background: hsl(226deg 30% 25%);
+            font-size: 0.7rem;
+            border-radius: 9px;
+            padding: 3px 5.5px;
+            right: -5px;
+            top: -5px;
+            color: white;
+            font-family: var(--f1);
+        }
+        
+        .shopping_cart {
+            position: relative;
+        }
+        
+        form.search-form {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: flex-start;
+            align-items: center;
+            background: white;
+            color: black;
+            padding: 4px 7px;
+            font-size: 1rem;
+            line-height: 1rem;
+            border-radius: 5px;
+            overflow: hidden;
+            gap: 5px;
+        }
+        
+        form.search-form input {
+            border: unset;
+            padding: unset;
+            font-family: var(--f1);
+            FONT-WEIGHT: 400;
+            height: 100%;
+            width: 100%;
+            font-size: 0.8rem;
+            line-height: 0.8rem;
+        }
+        
+        input:focus-visible {
+            outline: unset;
+        }
+        
+        .search {
+            color: hsl(226deg 28% 42%);
+            font-weight: bold;
+        }
+        
+        .banner {
+            width: 100%;
+            aspect-ratio: 1/0.5;
+            background-size: cover;
+            background-position: center;
+            background-color: #2d365829;
+        }
+        
+        .heading {
+            padding: 10px;
+            font-size: 1.2rem;
+            line-height: 1.2rem;
+            text-transform: uppercase;
+            FONT-WEIGHT: 800;
+            letter-spacing: 1px;
+            color: hsl(226deg 30% 25%);
+        }
+        
+        .product {
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .cover::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0000000a;
+        }
+        
+        .cover {
+            aspect-ratio: 1;
+            width: 140px;
+            border-radius: 5px;
+            background-color: #2d365829;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0px 0px 0px 0px #2d3658;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fake .cover {
+            animation: changeColor 0.7s infinite alternate;
+        }
+        
+        .price.mini {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 1rem;
+            line-height: 1rem;
+            FONT-WEIGHT: 500;
+        }
+        
+        .price.mini .after:before,
+        .price.mini .before:before {
+            content: "Rs ";
+        }
+        
+        .price.mini .after {
+            font-size: 1.2rem;
+            line-height: 1.2rem;
+            FONT-WEIGHT: 600;
+            color: #2d3658;
+        }
+        
+        .price.mini .before:after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            padding: 1px;
+            background: #2d3658;
+            top: calc(50% - 0px);
+            right: 0;
+        }
+        
+        .price.mini .before {
+            position: relative;
+        }
+        
+        .addtocart.mini,
+        .addtocart.big {
+            width: 100%;
+            background: #2d3658;
+            color: white;
+            text-align: center;
+            height: 35px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            FONT-WEIGHT: 400;
+            border-radius: 5px;
+        }
+        
+        .scroll-grid {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            gap: 10px;
+        }
+        
+        .scroll-grid .product:first-child {
+            margin-left: 10px;
+        }
+        
+        .scroll-grid .product:last-child {
+            margin-right: 10px;
+        }
+        
+        .fake-after,
+        .fake-before {
+            height: 20px;
+            background: #2d365829;
+            width: calc(100% - 50px);
+            border-radius: 5px;
+            animation: changeColor 0.7s infinite alternate;
+        }
+        
+        .fake-before {
+            margin-top: 4px;
+            width: calc(100% - 90px);
+            height: 17px;
+        }
+        
+        .product-title.mini {
+            font-size: 1rem;
+            FONT-WEIGHT: 500;
+            line-height: 1rem;
+            overflow: hidden;
+            width: 100%;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            word-break: break-all;
+        }
+        
+        @keyframes changeColor {
+            from {
+                background-color: #2d365829;
+            }
+            to {
+                background-color: #2d365857;
+            }
+        }
+        
+        @keyframes rotating {
+            from {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            to {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        
+        .mini.loader.bottom-fixed {
+            position: sticky;
+            bottom: var(--width);
+            left: 0;
+            --width: 20px;
+            width: calc(100% - calc(var(--width)*2));
+            background: #2d3658;
+            aspect-ratio: 1/0.2;
+            margin: var(--width);
+            border-radius: 5px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .spinner {
+            width: 30px;
+            height: 30px;
+            /* background-color: white; */
+            /* border-radius: 100px; */
+            background-image: url(/images/loader.png);
+            background-size: cover;
+            -webkit-animation: rotating 0.8s linear infinite;
+            -moz-animation: rotating 0.8s linear infinite;
+            -ms-animation: rotating 0.8s linear infinite;
+            -o-animation: rotating 0.8s linear infinite;
+            animation: rotating 0.8s linear infinite;
+        }
+        /*big product elements css*/
+        
+        .products.flex-down {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-content: flex-start;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 10px;
+        }
+        
+        .products.flex-down.home-more {
+            margin-top: unset;
+        }
+        
+        .product.big {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .product-data.big {
+            display: flex;
+            flex-direction: column;
+            align-content: flex-start;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 5px;
+            width: 100%;
+        }
+        
+        .fake .price.big.mini {
+            width: 100%;
+        }
+        
+        .fake .big.product-title {
+            height: 54px;
+            width: 100%;
+            background: #2d365829;
+            border-radius: 5px;
+            animation: changeColor 0.7s infinite alternate;
+        }
+        
+        .big.product-title {
+            font-size: 1.2rem;
+            line-height: 1.2rem;
+            FONT-WEIGHT: 500;
+        }
+        
+        .back\&h1 {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        header.cart-header {
+            padding: 5px 10px;
+        }
+        
+        .totals-checkout {
+            font-size: 1.2rem;
+            line-height: 1.2rem;
+            FONT-WEIGHT: 400;
+            padding: 7px 10px;
+            position: fixed;
+            bottom: 0;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: center;
+            justify-content: space-between;
+            align-items: center;
+            width: calc(100% - 20px);
+            background: #4c5a88;
+            color: white;
+        }
+        
+        .checkout {
+            padding: 10px 20px;
+            background: #2d3658;
+            border-radius: 5px;
+        }
+        
+        .totals:before {
+            content: "Total - Rs ";
+        }
+    </style>
+</head>
+
+<body>
+    <div id="home" style="display: none;" class="page true">
+        <header>
+            <h1 page="home" class="pagex">
+                buybani
+            </h1>
+            <span page="cart" class="pagex material-icons shopping_cart">shopping_cart</span>
+            <form action="" class="search-form" method="post">
+                <span class="material-icons search">search</span>
+                <input type="search" placeholder="Search Products" name="q" id="">
+            </form>
+        </header>
+        <div style="background-image: url(/images/3.png);" class="banner">
+
+        </div>
+        <div class="heading">
+            Hot Products
+        </div>
+        <div class="products scroll-grid home">
+        </div>
+        <div class="heading">
+            All Products
+        </div>
+        <div class="products flex-down home-more">
+
+        </div>
+    </div>
+    <div id="cart" style="display: none;" class="page">
+        <header class="cart-header">
+            <div class="back&h1">
+                <span page="home" class="material-icons backtohome pagex">
+                arrow_back
+            </span>
+                <h1 page="home" class="pagex">
+                    buybani
+                </h1>
+            </div>
+        </header>
+        <div class="products flex-down load-cart">
+
+        </div>
+        <div style="display: none;" class="totals-checkout">
+            <div class="totals">
+
+            </div>
+            <div class="checkout">
+                Checkout
+            </div>
+        </div>
+    </div>
+    <div style="display: none;" class="mini loader bottom-fixed">
+        <div class="spinner">
+
+        </div>
+    </div>
+    <script>
+        function set(location, data) {
+            localStorage.setItem(location, data)
+            return localStorage.getItem(location)
+        }
+
+        function seti(location, data) {
+            localStorage.setItem(location, data)
+        }
+
+        function get(location) {
+            return localStorage.getItem(location)
+        }
+        const {
+            key
+        } = getUrlParams(location.search);
+        if (key) {
+
+        }
+
+        function getUrlParams(urlOrQueryString) {
+            if ((i = urlOrQueryString.indexOf('?')) >= 0) {
+                const queryString = urlOrQueryString.substring(i + 1);
+                if (queryString) {
+                    return _mapUrlParams(queryString);
+                }
+            }
+
+            return {};
+        }
+
+        function _mapUrlParams(queryString) {
+            return queryString
+                .split('&')
+                .map(function(keyValueString) {
+                    return keyValueString.split('=')
+                })
+                .reduce(function(urlParams, [key, value]) {
+                    if (Number.isInteger(parseInt(value)) && parseInt(value) == value) {
+                        urlParams[key] = parseInt(value);
+                    } else {
+                        urlParams[key] = decodeURI(value);
+                    }
+                    return urlParams;
+                }, {});
+        }
+    </script>
+    <script>
+        /// toggal click for page fadein and hide on the click trigger//
+
+        $(document).on('click', '.pagex', function() {
+            const page = $(this).attr('page');
+            if (page.length) {
+                pages(page)
+            }
+        })
+        fetch("https://www.buybani.com/wp-json/wc/store/products").then(o => o.json()).then((o) => {
+            console.log(o)
+        })
+        $(document).on('click', '.pagex[page="cart"]', function() {
+                async function run2() {
+                    try {
+                        const loader = $('.loader');
+                        const totals = $('.totals-checkout');
+                        const home_more = $('.load-cart');
+                        home_more.empty()
+                        for (var i = 1; i <= 10; i++) {
+                            home_more.append(product_big(null, true))
+                        }
+                        totals.hide()
+                        loader.show();
+                        const datax = await cartiteams();
+                        loader.fadeOut();
+
+                        if (datax) {
+                            totals.fadeIn()
+                            home_more.empty()
+                                //  datax.data.forEach(e => {});
+                            $.each(datax.data, function(o, e) {
+                                const send = {
+                                    cover: e.featured_image,
+                                    item_key: e.item_key,
+                                    title: e.name,
+                                    regular_price: e.price_regular,
+                                    price: e.price,
+                                }
+                                console.log(send)
+                                home_more.append(product_big(send))
+                            })
+                        } else {
+
+                        }
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+                run2()
+            })
+            ///on remove click 
+        $(document).on('click', '.addtocart.Remove.big', function() {
+            const key = $(this).attr('id');
+            async function run2() {
+                try {
+                    console.log(true)
+                    const loader = $('.loader');
+                    loader.show()
+                    const cart_key = get('cart_key');
+                    const data = await api('/cart/item/' + key + '?cart_key=' + cart_key, 'DELETE')
+                    await totals()
+                    console.log(data)
+                    $('.product.big[id="' + key + '"]').remove()
+                    loader.hide()
+                    await count()
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            run2()
+        })
+
+        function pages(page) {
+            if (page) {
+                $('.true').removeClass('true').hide();
+                $('[id="' + page + '"]').addClass('true').fadeIn();
+            }
+            $('.page').each(function(o, v) {
+                const check = $(this).hasClass('true');
+                if (check) {
+                    $(this).fadeIn()
+                } else {
+                    $(this).hide()
+                }
+            })
+        }
+        pages()
+
+        function product_big(data, fake) {
+            //for: flex-down
+            if (fake === true) {
+                return `<div class="product big fake">
+            <div class="cover-big">
+                <div class="cover big fake"></div>
+            </div>
+            <div class="product-data big">
+                <div class="big product-title"></div>
+                <div class="price big mini">
+                    <div class="fake-after"></div>
+                    <div class="fake-before"></div>
+                </div>
+                <div class="addtocart big"></div>
+            </div>
+        </div>`
+            } else {
+                var view;
+                var id;
+                if (data.item_key) {
+                    view = 'Remove';
+                    id = `id="${data.item_key}"`;
+                } else {
+                    view = 'View';
+                    id = '';
+                }
+                var price;
+                if (data.price === data.regular_price) {
+                    price = `<div class="after">${data.price}</div>`
+                } else {
+                    price = `<div class="after">${data.price}</div>
+                <div class="before">${data.regular_price}</div>`
+                }
+                return `<div ${id} class="product big">
+            <div class="cover-big">
+                <div style="background-image: url(${data.cover});" class="cover big"></div>
+            </div>
+            <div class="product-data big">
+                <div class="big product-title">${data.title}</div>
+                <div class="price big mini">${price}</div>
+                <div ${id} class="addtocart ${view} big">${view}</div>
+            </div>
+        </div>`
+            }
+        }
+
+        function product(data, fake) {
+            //for: scroll-grid
+            if (fake === true) {
+                return `
+        <div class="product fake mini">
+            <div class="cover"></div>
+            <div class="price mini">
+                <div class="fake-after"></div>
+                <div class="fake-before"></div>
+            </div>
+            <div class="addtocart mini"></div>
+        </div>`
+            } else {
+                var price;
+                var csstitle;
+                if (data.price === data.regular_price) {
+                    price = `<div class="after">${data.price}</div>`
+                    csstitle = `style="-webkit-line-clamp: 2;"`;
+                } else {
+                    price = `<div class="after">${data.price}</div>
+                <div class="before">${data.regular_price}</div>`
+                    csstitle = '';
+                }
+                return `<div class="product mini">
+            <div style="background-image: url(${data.cover});" class="cover">
+            </div>
+            <div ${csstitle} class="product-title mini">${data.title}</div>
+            <div class="price mini">${price}</div>
+            <div onclick="addtocart(${data.id},1)" class="addtocart mini">Add to cart</div>
+        </div>`
+            }
+        }
+        async function api(link, type) {
+            try {
+                if (type) {
+                    return fetch('https://www.buybani.com/wp-json/cocart/v2' + link, {
+                        method: type
+                    }).then(o => o.json())
+                } else {
+                    return fetch('https://www.buybani.com/wp-json/cocart/v2' + link).then(o => o.json())
+                }
+            } catch (error) {
+                return error
+            }
+        }
+        async function count() {
+            try {
+                var data;
+                const key = get('cart_key');
+                if (get('cart_key')) {
+                    data = await api(`/cart/items/count?cart_key=${key}`);
+                } else {
+                    data = await api(`/cart/items/count`);
+                }
+                $('html').css('--count', `"${data}"`)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        async function totals() {
+            try {
+                const key = get('cart_key');
+                if (key) {
+                    const totals = await api(`/cart/totals?cart_key=${key}`);
+                    $('.totals').text(totals.total)
+                    return totals.total;
+                } else {
+                    return 0
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        async function cartiteams() {
+            try {
+                const key = get('cart_key');
+                if (key) {
+                    const data = await api(`/cart/items?cart_key=${key}`);
+                    const total = await totals();
+                    return {
+                        data,
+                        total
+                    }
+                } else {
+                    return null
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        async function addtocart(id, quantity) {
+            try {
+                var data;
+                const loader = $('.loader');
+                loader.show()
+                const key = get('cart_key');
+                if (get('cart_key')) {
+                    data = await api(`/cart/add-item?id=${id}&quantity=${quantity}&cart_key=${key}`, "POST");
+                } else {
+                    data = await api(`/cart/add-item?id=${id}&quantity=${quantity}`, "POST");
+                    seti('cart_key', data.cart_key)
+                }
+                await count()
+                console.log(data)
+                loader.hide()
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        async function run() {
+            try {
+                const pe = $('.products.scroll-grid.home');
+                const home_more = $('.home-more');
+
+                for (var i = 1; i <= 10; i++) {
+                    pe.append(product(null, true))
+                    home_more.append(product_big(null, true))
+                }
+                await count()
+                const data = await api('/products?page=1')
+
+                pe.empty()
+                data.forEach(e => {
+                    const send = {
+                        id: e.id,
+                        price: e.prices.price,
+                        regular_price: e.prices.regular_price,
+                        cover: e.images[0].src.thumbnail,
+                        title: e.name
+                    }
+                    console.log(e)
+                    pe.prepend(product(send))
+                });
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        run()
+    </script>
+</body>
+
+</html>
