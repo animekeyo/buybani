@@ -388,7 +388,7 @@
             font-size: 1.2rem;
             line-height: 1.2rem;
             FONT-WEIGHT: 400;
-            padding: 7px 10px;
+            padding: 5px 16px;
             position: fixed;
             bottom: 0;
             display: flex;
@@ -397,9 +397,10 @@
             align-content: center;
             justify-content: space-between;
             align-items: center;
-            width: calc(100% - 20px);
+            width: calc(100% - 32px);
             background: #4c5a88;
             color: white;
+            font-family: var(--f3);
         }
         
         .checkout {
@@ -410,6 +411,13 @@
         
         .totals:before {
             content: "Total - Rs ";
+        }
+        
+        .product-addtional-data {
+            width: 100%;
+            display: flex;
+            gap: 5px;
+            flex-direction: column;
         }
     </style>
 </head>
@@ -533,7 +541,7 @@
                     const data = await api('/cart/item/' + key + '?cart_key=' + cart_key, 'DELETE')
                     await totals()
                     console.log(data)
-                    $('.product.big[id="' + key + '"]').remove()
+                    $('.big[id="' + key + '"]').remove()
                     loader.hide()
                     await count()
                 } catch (error) {
@@ -578,11 +586,17 @@
             } else {
                 var view;
                 var id;
+                var view2;
                 if (data.item_key) {
-                    view = 'Remove';
+                    view = `
+                        <div class="product-addtional-data">
+                            <div id="${data.item_key}" class="addtocart Remove big">Remove</div>
+                        </div>`;
+                    view2 = ''
                     id = `id="${data.item_key}"`;
                 } else {
-                    view = 'View';
+                    view = '';
+                    view2 = `<div class="addtocart View big">View</div>`;
                     id = '';
                 }
                 var price;
@@ -599,9 +613,9 @@
             <div class="product-data big">
                 <div class="big product-title">${data.title}</div>
                 <div class="price big mini">${price}</div>
-                <div ${id} class="addtocart ${view} big">${view}</div>
+                ${view2}
             </div>
-        </div>`
+        </div> ${view}`
             }
         }
 
