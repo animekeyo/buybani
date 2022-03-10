@@ -10,9 +10,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="scripts/database.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fredoka:wght@300;400;500;600;700&family=Jost:wght@100;200;300;400;500;600;700;800;900&display=swap');
          :root {
             --f1: 'Fredoka', sans-serif;
+            --f2: 'Bebas Neue', cursive;
+            --f3: 'Jost', sans-serif;
         }
         
         body {
@@ -125,6 +127,7 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
+            font-family: var(--f3);
         }
         
         .cover::after {
@@ -306,7 +309,7 @@
             height: 30px;
             /* background-color: white; */
             /* border-radius: 100px; */
-            background-image: url(/images/loader.png);
+            background-image: url(images/loader.png);
             background-size: cover;
             -webkit-animation: rotating 0.8s linear infinite;
             -moz-animation: rotating 0.8s linear infinite;
@@ -423,7 +426,7 @@
                 <input type="search" placeholder="Search Products" name="q" id="">
             </form>
         </header>
-        <div style="background-image: url(/images/3.png);" class="banner">
+        <div style="background-image: url(images/3.png);" class="banner">
 
         </div>
         <div class="heading">
@@ -490,9 +493,9 @@
                             home_more.append(product_big(null, true))
                         }
                         totals.hide()
-                        loader.show();
+
                         const datax = await cartiteams();
-                        loader.fadeOut();
+
 
                         if (datax) {
                             totals.fadeIn()
