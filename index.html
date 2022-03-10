@@ -162,11 +162,6 @@
             width: 100px;
         }
         
-        .products.flex-down.load-cart .addtocart.mini,
-        .addtocart.big {
-            font-size: 1.4rem!important;
-        }
-        
         .fake .cover {
             animation: changeColor 0.7s infinite alternate;
         }
@@ -208,7 +203,8 @@
         .price.mini .before {
             position: relative;
         }
-        /* .addtocart.mini,
+        
+        .addtocart.mini,
         .addtocart.big {
             width: 100%;
             background: #2d3658;
@@ -225,26 +221,6 @@
             FONT-WEIGHT: 400;
             border-radius: 5px;
             font-family: var(--f1);
-        } */
-        
-        .addtocart.mini,
-        .addtocart.big {
-            width: 100%;
-            background: #2d3658;
-            color: white;
-            text-align: center;
-            height: 35px;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            align-content: center;
-            justify-content: center;
-            align-items: center;
-            font-size: 1rem;
-            FONT-WEIGHT: 400;
-            border-radius: 5px;
-            font-family: var(--f2);
-            letter-spacing: 1.5px;
         }
         
         .scroll-grid {
@@ -555,7 +531,8 @@
         }
         
         form.for-product-addtional span.material-icons {
-            font-size: 2rem;
+            font-size: 1rem;
+            FONT-WEIGHT: 800;
         }
         
         form.for-product-addtional input {
@@ -564,12 +541,21 @@
             padding: unset;
             width: 60px;
             text-align: center;
-            font-size: 1.3rem;
-            line-height: 1.3rem;
+            font-size: 0.8rem;
+            line-height: 0.8rem;
             FONT-WEIGHT: 800;
             font-family: var(--f3);
             color: white;
             background: transparent;
+        }
+        
+        .totals {
+            text-transform: uppercase;
+            FONT-WEIGHT: 600;
+        }
+        
+        div#cart {
+            border-bottom: 50px solid white;
         }
     </style>
 </head>
@@ -674,12 +660,19 @@
                             console.log(datax)
                                 //  datax.data.forEach(e => {});
                             $.each(datax.data, function(o, e) {
+                                var qq;
+                                if (e.quantity.max_purchase === e.quantity.min_purchase) {
+                                    qq = false
+                                } else {
+                                    qq = true
+                                }
                                 const send = {
                                     cover: e.featured_image,
                                     item_key: e.item_key,
                                     title: e.name,
                                     regular_price: e.price_regular,
                                     price: e.price,
+                                    qq
                                 }
                                 console.log(send)
                                 home_more.append(product_big(send))
@@ -754,14 +747,20 @@
                 var id;
                 var view2;
                 if (data.item_key) {
+                    var qq;
+                    if (data.qq === true) {
+                        qq = `<form action="" method="post" class="for-product-addtional">
+                         <span id="${data.item_key}" class="material-icons remove-qq">remove</span>
+                            <input id="${data.item_key}" type="number" value="1" name="" id="">
+                         <span id="${data.item_key}" class="material-icons add-qq">add</span>
+                        </form>`;
+                    } else {
+                        qq = '';
+                    }
                     view = `
                         <div  id="${data.item_key}" class="product-addtional-data big">
                             <div id="${data.item_key}" class="addtocart Remove big">Remove</div>
-                        <form action="" method="post" class="for-product-addtional">
-                         <span class="material-icons remove-qq">remove</span>
-                            <input type="number" value="1" name="" id="">
-                         <span class="material-icons add-qq">add</span>
-                        </form>
+                            ${qq}
                         </div>`;
                     view2 = ''
                     id = `id="${data.item_key}"`;
