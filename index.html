@@ -421,6 +421,81 @@
             gap: 5px;
             flex-direction: column;
         }
+        /********************************/
+        /********************************/
+        /********************************/
+        /********************************/
+        
+        .categories.mini {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            overflow-y: hidden;
+            overflow-x: scroll;
+            width: 100%;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .categorie.mini:first-child {
+            margin-left: 10px;
+        }
+        
+        .categorie.mini:last-child {
+            margin-right: 10px;
+        }
+        
+        .categorie-name {
+            inline-size: max-content;
+        }
+        
+        .categorie-count {
+            background: #2d3658;
+            color: white;
+            padding: 1px 5px;
+            border-radius: 12px;
+        }
+        
+        .categorie.mini {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            width: fit-content;
+            padding: 5px 10px;
+            background: #0000000a;
+            border: 2px solid #0000002e;
+            border-radius: 100px;
+            line-height: 1rem;
+            font-size: 1rem;
+            font-family: var(--f3);
+            FONT-WEIGHT: 600;
+            color: #2d3658;
+            gap: 10px;
+            scroll-snap-align: center;
+        }
+        
+         ::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        
+        body {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+        
+        .categorie.mini.fake {
+            height: 22px;
+            width: 85px;
+            min-width: 100px;
+            border: unset;
+            animation: changeColor 0.7s infinite alternate;
+        }
     </style>
 </head>
 
@@ -436,8 +511,10 @@
                 <input type="search" placeholder="Search Products" name="q" id="">
             </form>
         </header>
-        <div style="background-image: url(images/3.png);" class="banner">
+        <div style="display:none;background-image: url(images/3.png);" class="banner">
 
+        </div>
+        <div class="categories mini">
         </div>
         <div class="heading">
             Hot Products
@@ -489,9 +566,10 @@
                 pages(page)
             }
         })
-        fetch("https://www.buybani.com/wp-json/wc/store/products").then(o => o.json()).then((o) => {
-            console.log(o)
-        })
+
+        // fetch("https://www.buybani.com/wp-json/wc/store/products").then(o => o.json()).then((o) => {
+        //     console.log(o)
+        // })
         $(document).on('click', '.pagex[page="cart"]', function() {
                 async function run2() {
                     try {
@@ -621,6 +699,18 @@
             }
         }
 
+        function categories(data, fake) {
+            //for: categories.mini
+            if (fake === true) {
+                return `<div class="categorie mini fake"></div>`
+            } else {
+                return `<div id="${data.id}" class="categorie mini">
+                <div class="categorie-name">${data.title}</div>
+                <div class="categorie-count">${data.count}</div>
+                </div>`
+            }
+        }
+
         function product(data, fake) {
             //for: scroll-grid
             if (fake === true) {
@@ -734,14 +824,26 @@
             try {
                 const pe = $('.products.scroll-grid.home');
                 const home_more = $('.home-more');
-
+                const categories_home = $('.categories.mini');
                 for (var i = 1; i <= 10; i++) {
                     pe.append(product(null, true))
+                    categories_home.append(categories(null, true))
                     home_more.append(product_big(null, true))
                 }
                 await count()
-                const data = await api('/products?page=1')
+                const categories_data = await api('/products/categories?orderby=count&order=asc&hide_empty=true')
+                categories_home.empty();
 
+                categories_data.forEach(e => {
+                    const send = {
+                        id: e.id,
+                        count: e.count,
+                        title: e.name
+                    }
+                    console.log(e)
+                    categories_home.prepend(categories(send))
+                });
+                const data = await api('/products?page=1')
                 pe.empty()
                 data.forEach(e => {
                     const send = {
@@ -751,7 +853,7 @@
                         cover: e.images[0].src.thumbnail,
                         title: e.name
                     }
-                    console.log(e)
+
                     pe.prepend(product(send))
                 });
             } catch (error) {
