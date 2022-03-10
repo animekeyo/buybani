@@ -211,6 +211,7 @@
             font-size: 0.8rem;
             FONT-WEIGHT: 400;
             border-radius: 5px;
+            font-family: var(--f1);
         }
         
         .scroll-grid {
@@ -379,7 +380,7 @@
             align-content: center;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         header.cart-header {
@@ -391,6 +392,7 @@
             line-height: 1.2rem;
             FONT-WEIGHT: 400;
             padding: 5px 16px;
+            padding-right: 5px;
             position: fixed;
             bottom: 0;
             display: flex;
@@ -399,7 +401,7 @@
             align-content: center;
             justify-content: space-between;
             align-items: center;
-            width: calc(100% - 32px);
+            width: calc(100% - 22px);
             background: #4c5a88;
             color: white;
             font-family: var(--f3);
@@ -409,6 +411,9 @@
             padding: 10px 20px;
             background: #2d3658;
             border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            FONT-WEIGHT: 500;
         }
         
         .totals:before {
@@ -427,7 +432,7 @@
         /********************************/
         
         .categories.mini {
-            margin-top: 10px;
+            padding: 10px 0px;
             display: flex;
             flex-direction: row;
             gap: 10px;
@@ -435,6 +440,11 @@
             overflow-x: scroll;
             width: 100%;
             scroll-snap-type: x mandatory;
+            position: sticky;
+            top: 84px;
+            background: white;
+            z-index: 10;
+            border-bottom: 3px solid #4c5a88;
         }
         
         .categorie.mini:first-child {
@@ -466,7 +476,7 @@
             width: fit-content;
             padding: 5px 10px;
             background: #0000000a;
-            border: 2px solid #4c5a88;
+            border: 2px solid #2d3658;
             border-radius: 100px;
             line-height: 1rem;
             font-size: 1rem;
@@ -502,9 +512,15 @@
 <body>
     <div id="home" style="display: none;" class="page true">
         <header>
-            <h1 page="home" class="pagex">
-                buybani
-            </h1>
+
+            <div class="back&h1">
+                <span page="home" class="material-icons backtohome pagex">
+                        widgets
+                </span>
+                <h1 page="home" class="pagex">
+                    buybani
+                </h1>
+            </div>
             <span page="cart" class="pagex material-icons shopping_cart">shopping_cart</span>
             <form action="" class="search-form" method="post">
                 <span class="material-icons search">search</span>
@@ -516,7 +532,7 @@
         </div>
         <div class="categories mini">
         </div>
-        <div class="heading">
+        <div class="heading remove-top-padding">
             Hot Products
         </div>
         <div class="products scroll-grid home">
@@ -585,9 +601,12 @@
                         const datax = await cartiteams();
 
 
-                        if (datax) {
+                        if (datax.total === undefined) {
+                            home_more.empty()
+                        } else {
                             totals.fadeIn()
                             home_more.empty()
+                            console.log(datax)
                                 //  datax.data.forEach(e => {});
                             $.each(datax.data, function(o, e) {
                                 const send = {
@@ -600,8 +619,6 @@
                                 console.log(send)
                                 home_more.append(product_big(send))
                             })
-                        } else {
-
                         }
                     } catch (error) {
                         console.log(error)
@@ -616,11 +633,15 @@
                 try {
                     console.log(true)
                     const loader = $('.loader');
+                    const totalsx = $('.totals-checkout');
                     loader.show()
                     const cart_key = get('cart_key');
                     const data = await api('/cart/item/' + key + '?cart_key=' + cart_key, 'DELETE')
                     await totals()
                     console.log(data)
+                    if (data.items[0]) {} else {
+                        totalsx.hide();
+                    }
                     $('.big[id="' + key + '"]').remove()
                     loader.hide()
                     await count()
