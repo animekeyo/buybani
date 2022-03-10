@@ -128,6 +128,7 @@
             flex-direction: column;
             gap: 5px;
             font-family: var(--f3);
+            scroll-snap-align: center;
         }
         
         .cover::after {
@@ -222,6 +223,7 @@
             overflow-x: scroll;
             overflow-y: hidden;
             gap: 10px;
+            scroll-snap-type: x mandatory;
         }
         
         .scroll-grid .product:first-child {
