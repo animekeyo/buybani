@@ -121,7 +121,7 @@
             letter-spacing: 1px;
             color: hsl(226deg 30% 25%);
             position: sticky;
-            top: 140px;
+            top: 137px;
             background: white;
             z-index: 10;
             transition: 1s;
@@ -156,6 +156,15 @@
             box-shadow: 0px 0px 0px 0px #2d3658;
             position: relative;
             overflow: hidden;
+        }
+        
+        .products.flex-down.load-cart .cover.big {
+            width: 100px;
+        }
+        
+        .products.flex-down.load-cart .addtocart.mini,
+        .addtocart.big {
+            font-size: 1.4rem!important;
         }
         
         .fake .cover {
@@ -199,8 +208,7 @@
         .price.mini .before {
             position: relative;
         }
-        
-        .addtocart.mini,
+        /* .addtocart.mini,
         .addtocart.big {
             width: 100%;
             background: #2d3658;
@@ -217,6 +225,26 @@
             FONT-WEIGHT: 400;
             border-radius: 5px;
             font-family: var(--f1);
+        } */
+        
+        .addtocart.mini,
+        .addtocart.big {
+            width: 100%;
+            background: #2d3658;
+            color: white;
+            text-align: center;
+            height: 35px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            FONT-WEIGHT: 400;
+            border-radius: 5px;
+            font-family: var(--f2);
+            letter-spacing: 1.5px;
         }
         
         .scroll-grid {
@@ -429,7 +457,7 @@
             width: 100%;
             display: flex;
             gap: 5px;
-            flex-direction: column;
+            flex-direction: row;
         }
         /********************************/
         /********************************/
@@ -449,7 +477,7 @@
             top: 84px;
             background: white;
             z-index: 10;
-            border-bottom: 3px solid #4c5a88;
+            border-bottom: 1px solid #0000001a;
         }
         
         .categorie.mini:first-child {
@@ -510,6 +538,38 @@
             min-width: 100px;
             border: unset;
             animation: changeColor 0.7s infinite alternate;
+        }
+        
+        form.for-product-addtional {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: space-between;
+            align-items: center;
+            width: calc(100% - 35px);
+            padding: 0px 10px;
+            color: white;
+            border-radius: 5px;
+            background: #2d3658;
+        }
+        
+        form.for-product-addtional span.material-icons {
+            font-size: 2rem;
+        }
+        
+        form.for-product-addtional input {
+            border: unset;
+            width: fit-content;
+            padding: unset;
+            width: 60px;
+            text-align: center;
+            font-size: 1.3rem;
+            line-height: 1.3rem;
+            FONT-WEIGHT: 800;
+            font-family: var(--f3);
+            color: white;
+            background: transparent;
         }
     </style>
 </head>
@@ -695,8 +755,13 @@
                 var view2;
                 if (data.item_key) {
                     view = `
-                        <div class="product-addtional-data">
+                        <div  id="${data.item_key}" class="product-addtional-data big">
                             <div id="${data.item_key}" class="addtocart Remove big">Remove</div>
+                        <form action="" method="post" class="for-product-addtional">
+                         <span class="material-icons remove-qq">remove</span>
+                            <input type="number" value="1" name="" id="">
+                         <span class="material-icons add-qq">add</span>
+                        </form>
                         </div>`;
                     view2 = ''
                     id = `id="${data.item_key}"`;
