@@ -43,14 +43,16 @@ header {
 .shopping_cart::after {
     content: var(--count);
     position: absolute;
-    background: var(--c3);
-    font-size: 0.9rem;
-    border-radius: 9px;
-    padding: 2px 6px;
     right: -6px;
     top: -4px;
-    color: var(--c1);
-    font-family: var(--f2);
+    background: var(--c3);
+    color: var(--c2);
+    padding: 1px 5px;
+    border-radius: 12px;
+    line-height: 1rem;
+    font-size: 1rem;
+    font-family: var(--f3);
+    FONT-WEIGHT: 600;
 }
 
 .shopping_cart {
@@ -108,12 +110,12 @@ input:focus-visible {
     font-size: 1.2rem;
     line-height: 1.2rem;
     text-transform: uppercase;
-    FONT-WEIGHT: 800;
+    FONT-WEIGHT: 500;
     letter-spacing: 1px;
-    color: hsl(226deg 30% 25%);
+    color: var(--c1);
     position: sticky;
     top: 137px;
-    background: white;
+    background: var(--c2);
     z-index: 10;
     transition: 1s;
 }
@@ -166,7 +168,8 @@ input:focus-visible {
     align-items: flex-start;
     font-size: 1rem;
     line-height: 1rem;
-    FONT-WEIGHT: 500;
+    FONT-WEIGHT: 400;
+    color: var(--c1);
 }
 
 .price.mini .after:before,
@@ -178,17 +181,17 @@ input:focus-visible {
     font-size: 1.2rem;
     line-height: 1.2rem;
     FONT-WEIGHT: 600;
-    color: #2d3658;
+    color: var(--c3);
 }
 
 .price.mini .before:after {
     content: "";
     position: absolute;
     width: 100%;
-    padding: 1px;
-    background: #2d3658;
-    top: calc(50% - 0px);
-    right: 0;
+    padding: 1.5px;
+    background: var(--c3);
+    top: calc(50% - 2px);
+    right: -1px;
 }
 
 .price.mini .before {
@@ -198,8 +201,8 @@ input:focus-visible {
 .addtocart.mini,
 .addtocart.big {
     width: 100%;
-    background: #33394c26;
-    color: #1d253db0;
+    background: var(--c3);
+    color: black;
     text-align: center;
     height: 35px;
     display: flex;
@@ -254,7 +257,7 @@ input:focus-visible {
 
 .product-title.mini {
     font-size: 1rem;
-    FONT-WEIGHT: 500;
+    FONT-WEIGHT: 400;
     line-height: 1rem;
     overflow: hidden;
     width: 100%;
@@ -263,6 +266,7 @@ input:focus-visible {
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     word-break: break-all;
+    color: var(--c1);
 }
 
 @keyframes changeColor {
@@ -297,7 +301,7 @@ input:focus-visible {
     left: 0;
     --width: 20px;
     width: calc(100% - calc(var(--width)*2));
-    background: #2d3658;
+    background: var(--c3);
     aspect-ratio: 1/0.2;
     margin: var(--width);
     border-radius: 5px;
@@ -374,9 +378,9 @@ input:focus-visible {
 .big.product-title {
     font-size: 1.2rem;
     line-height: 1.2rem;
-    FONT-WEIGHT: 700;
+    FONT-WEIGHT: 400;
     font-family: var(--f3);
-    color: #161e3f;
+    color: var(--c1);
 }
 
 .back\&h1 {
@@ -558,10 +562,10 @@ header.cart-header {
 /* Hide scrollbar for IE, Edge and Firefox */
 
 body {
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
+    margin: unset;
+    font-family: var(--f1);
+    font-weight: 300;
+    background: var(--c2);
 }
 
 .categorie.mini.fake {
@@ -581,9 +585,9 @@ form.for-product-addtional {
     align-items: center;
     width: calc(100% - 35px);
     padding: 0px 10px;
-    color: white;
+    color: var(--c2);
     border-radius: 5px;
-    background: #2d3658;
+    background: var(--c3);
 }
 
 form.for-product-addtional span.material-icons {
@@ -601,7 +605,7 @@ form.for-product-addtional input {
     line-height: 0.8rem;
     FONT-WEIGHT: 800;
     font-family: var(--f3);
-    color: white;
+    color: var(--c2);
     background: transparent;
 }
 
@@ -615,5 +619,5 @@ form.for-product-addtional input {
 }
 
 div#cart {
-    border-bottom: 50px solid white;
+    border-bottom: 50px solid var(--c2);
 }
