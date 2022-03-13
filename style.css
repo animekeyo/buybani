@@ -296,9 +296,9 @@ input:focus-visible {
 }
 
 .mini.loader.bottom-fixed {
-    position: sticky;
-    left: 0;
-    bottom: calc(50% - 50px);
+    position: fixed;
+    left: calc(50% - 25px);
+    bottom: calc(50% - 25px);
     z-index: 100;
     margin: auto auto;
     width: 50px;
@@ -622,9 +622,9 @@ form.for-product-addtional input {
 }
 
 div.page {
-    border-bottom: 15px solid var(--c2);
+    border-bottom: 65px solid var(--c2);
 }
 
 div#cart {
-    border-bottom: 70px solid var(--c2);
+    border-bottom: 115px solid var(--c2);
 }
