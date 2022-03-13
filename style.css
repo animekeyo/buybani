@@ -297,14 +297,16 @@ input:focus-visible {
 
 .mini.loader.bottom-fixed {
     position: sticky;
-    bottom: var(--width);
     left: 0;
-    --width: 20px;
-    width: calc(100% - calc(var(--width)*2));
+    bottom: calc(50% - 50px);
+    z-index: 100;
+    margin: auto auto;
+    width: 50px;
+    height: 50px;
     background: var(--c3);
+    box-shadow: 0px 0px 0px 9px white;
     aspect-ratio: 1/0.2;
-    margin: var(--width);
-    border-radius: 5px;
+    border-radius: 50px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -619,6 +621,10 @@ form.for-product-addtional input {
     flex-direction: column;
 }
 
+div.page {
+    border-bottom: 15px solid var(--c2);
+}
+
 div#cart {
-    border-bottom: 50px solid var(--c2);
+    border-bottom: 70px solid var(--c2);
 }
