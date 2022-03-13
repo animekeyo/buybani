@@ -276,8 +276,38 @@
            console.log(error)
        }
    }
-   run()
-       /// toggal click for page fadein and hide on the click trigger//
+
+   firebase.auth().onAuthStateChanged(async(user) => {
+       const ll_div = $('.login-with-google');
+       await run()
+       if (user) {
+           const userx = firebase.database().ref('users').child(user.uid)
+           const avatar = await userx.child('avatar').once('value');
+
+           if (avatar.exists()) {
+               $('.profile').css('background-image', `url(${avatar.val()})`)
+               $('html')
+                   .attr('avatar', avatar.val())
+           }
+           ll_div.hide()
+       } else {
+           console.log(false)
+           ll_div.show()
+       }
+   });
+
+   function google() {
+       var provider = new firebase.auth.GoogleAuthProvider();
+       firebase.auth()
+           .signInWithPopup(provider)
+           .then((result) => {
+
+           }).catch((error) => {
+               console.log(error)
+           });
+   }
+
+   /// toggal click for page fadein and hide on the click trigger//
 
    $(document).on('click', '.pagex', function() {
        const page = $(this).attr('page');
