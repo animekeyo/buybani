@@ -413,17 +413,18 @@ header.cart-header {
     width: calc(100% - 14px);
     background: var(--c2);
     color: var(--c1);
+    box-shadow: 0px -3px 0px 0px var(--c3);
     font-family: var(--f3);
 }
 
 .checkout {
     padding: 10px 15px;
     background: var(--c3);
-    color: var(--c1);
+    color: var(--c2);
     border-radius: 5px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    FONT-WEIGHT: 600;
+    FONT-WEIGHT: 800;
 }
 
 .totals:before {
