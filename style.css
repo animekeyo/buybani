@@ -403,7 +403,7 @@ header.cart-header {
     FONT-WEIGHT: 400;
     padding: 7px 7px;
     position: fixed;
-    bottom: 0;
+    bottom: 63px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
