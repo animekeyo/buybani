@@ -405,7 +405,7 @@ header.cart-header {
     FONT-WEIGHT: 400;
     padding: 7px 7px;
     position: fixed;
-    bottom: 63px;
+    bottom: 62px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -415,7 +415,7 @@ header.cart-header {
     width: calc(100% - 14px);
     background: var(--c2);
     color: var(--c1);
-    box-shadow: 0px -3px 0px 0px var(--c3);
+    /* box-shadow: 0px -3px 0px 0px var(--c1); */
     font-family: var(--f3);
 }
 

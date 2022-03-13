@@ -1,87 +1,50 @@
-   /// toggal click for page fadein and hide on the click trigger//
-
-   $(document).on('click', '.pagex', function() {
-       const page = $(this).attr('page');
-       if (page.length) {
-           pages(page)
-       }
-   })
-
-   // fetch("https://www.buybani.com/wp-json/wc/store/products").then(o => o.json()).then((o) => {
-   //     console.log(o)
-   // })
-   $(document).on('click', '.pagex[page="cart"]', function() {
-           async function run2() {
-               try {
-                   const loader = $('.loader');
-                   const totals = $('.totals-checkout');
-                   const home_more = $('.load-cart');
-                   home_more.empty()
-                   for (var i = 1; i <= 10; i++) {
-                       home_more.append(product_big(null, true))
-                   }
-                   totals.hide()
-
-                   const datax = await cartiteams();
-
-
-                   if (datax.total === undefined) {
-                       home_more.empty()
-                   } else {
-                       totals.fadeIn()
-                       home_more.empty()
-                       console.log(datax)
-                           //  datax.data.forEach(e => {});
-                       $.each(datax.data, function(o, e) {
-                           var qq;
-                           if (e.quantity.max_purchase === e.quantity.min_purchase) {
-                               qq = false
-                           } else {
-                               qq = true
-                           }
-                           const send = {
-                               cover: e.featured_image,
-                               item_key: e.item_key,
-                               title: e.name,
-                               regular_price: e.price_regular,
-                               price: e.price,
-                               qq
-                           }
-                           console.log(send)
-                           home_more.append(product_big(send))
-                       })
-                   }
-               } catch (error) {
-                   console.log(error)
-               }
+   /////////////////////////////
+   /////////////////////////////
+   /////////////////////////////
+   ///??????????APIS?????????///
+   /////////////////////////////
+   /////////////////////////////
+   /////////////////////////////
+   async function cocart(link, type) {
+       try {
+           if (type) {
+               return fetch('https://www.buybani.com/wp-json/cocart/v2' + link, {
+                   method: type
+               }).then(o => o.json())
+           } else {
+               return fetch('https://www.buybani.com/wp-json/cocart/v2' + link).then(o => o.json())
            }
-           run2()
-       })
-       ///on remove click 
-   $(document).on('click', '.addtocart.Remove.big', function() {
-       const key = $(this).attr('id');
-       async function run2() {
-           try {
-               console.log(true)
-               const loader = $('.loader');
-               const totalsx = $('.totals-checkout');
-               loader.show()
-               const cart_key = get('cart_key');
-               const data = await cocart('/cart/item/' + key + '?cart_key=' + cart_key, 'DELETE')
-               await totals()
-               console.log(data)
-               if (data.items[0]) {} else {
-                   totalsx.hide();
-               }
-               $('.big[id="' + key + '"]').remove()
-               loader.hide()
-               await count()
-           } catch (error) {
-               console.log(error)
-           }
+       } catch (error) {
+           return error
        }
-       run2()
-   })
+   }
+   async function wc(link, type, body) {
+       try {
+           if (type) {
+               var bodyxx
+               if (body) {
+                   bodyxx = body
+               } else {
+                   bodyxx = '';
+               }
+               return fetch('https://www.buybani.com/wp-json/wc/v3' + link, {
+                   method: type,
+                   body: bodyxx,
+               }).then(o => o.json())
+           } else {
+               return fetch('https://www.buybani.com/wp-json/wc/v3' + link).then(o => o.json())
+           }
+       } catch (error) {
+           return error
+       }
+   }
+   /////////////////////////////
+   /////////////////////////////
+   /////////////////////////////
+   ///??????????APIS?????????///
+   /////////////////////////////
+   /////////////////////////////
+   /////////////////////////////
 
    function pages(page) {
        if (page) {
@@ -123,9 +86,9 @@
                var qq;
                if (data.qq === true) {
                    qq = `<form action="" method="post" class="for-product-addtional">
-                 <span id="${data.item_key}" class="material-icons remove-qq">remove</span>
-                    <input id="${data.item_key}" type="number" value="1" name="" id="">
-                 <span id="${data.item_key}" class="material-icons add-qq">add</span>
+                 <span id="${data.item_key}" type="remove" class="ggqq material-icons remove-qq">remove</span>
+                    <input id="${data.item_key}" type="number" max="10" min="1" value="${data.quantity.value}" name="" id="">
+                 <span id="${data.item_key}" type="add" class="ggqq material-icons add-qq">add</span>
                 </form>`;
                } else {
                    qq = '';
@@ -206,76 +169,9 @@
 </div>`
        }
    }
-   /////////////////////////////
-   /////////////////////////////
-   /////////////////////////////
-   ///??????????APIS?????????///
-   /////////////////////////////
-   /////////////////////////////
-   /////////////////////////////
-   async function cocart(link, type) {
-       try {
-           if (type) {
-               return fetch('https://www.buybani.com/wp-json/cocart/v2' + link, {
-                   method: type
-               }).then(o => o.json())
-           } else {
-               return fetch('https://www.buybani.com/wp-json/cocart/v2' + link).then(o => o.json())
-           }
-       } catch (error) {
-           return error
-       }
-   }
-   async function wc(link, type, body) {
-       try {
-           if (type) {
-               var bodyxx
-               if (body) {
-                   bodyxx = body
-               } else {
-                   bodyxx = '';
-               }
-               return fetch('https://www.buybani.com/wp-json/wc/v3' + link, {
-                   method: type,
-                   body: bodyxx,
-               }).then(o => o.json())
-           } else {
-               return fetch('https://www.buybani.com/wp-json/wc/v3' + link).then(o => o.json())
-           }
-       } catch (error) {
-           return error
-       }
-   }
-   /////////////////////////////
-   /////////////////////////////
-   /////////////////////////////
-   ///??????????APIS?????????///
-   /////////////////////////////
-   /////////////////////////////
-   /////////////////////////////
 
-   wc('/orders', "POST", `${queryx({
-            billing_first_name: "syera",
-            billing_last_name: "chan",
-            billing_country: "PK",
-            billing_address_1: "rawalpindi",
-            billing_state: "PB",
-            billing_phone: "03009851933",
-            billing_email: "syeramusic@gmail.com",
-            shipping_first_name: "",
-            shipping_last_name: "",
-            shipping_country: "PK",
-            shipping_address_1: "",
-            shipping_city: "",
-            shipping_state: "",
-            shipping_postcode: "",
-            order_comments: "",
-            flat_rate: "1",
-            payment_method: "bykea_cash",
-        })}`).then((o) => {
-       console.log(o)
-   })
-   console.log()
+
+
    async function count() {
        try {
            var data;
@@ -381,3 +277,132 @@
        }
    }
    run()
+       /// toggal click for page fadein and hide on the click trigger//
+
+   $(document).on('click', '.pagex', function() {
+       const page = $(this).attr('page');
+       if (page.length) {
+           pages(page)
+       }
+   })
+
+   // fetch("https://www.buybani.com/wp-json/wc/store/products").then(o => o.json()).then((o) => {
+   //     console.log(o)
+   // })
+   $(document).on('click', '.pagex[page="cart"]', function() {
+           async function run2() {
+               try {
+                   const loader = $('.loader');
+                   const totals = $('.totals-checkout');
+                   const home_more = $('.load-cart');
+                   home_more.empty()
+                   for (var i = 1; i <= 10; i++) {
+                       home_more.append(product_big(null, true))
+                   }
+                   totals.hide()
+
+                   const datax = await cartiteams();
+
+
+                   if (datax.total === undefined) {
+                       home_more.empty()
+                   } else {
+                       totals.fadeIn()
+                       home_more.empty()
+                       console.log(datax)
+                           //  datax.data.forEach(e => {});
+                       $.each(datax.data, function(o, e) {
+                           var qq;
+                           if (e.quantity.max_purchase === e.quantity.min_purchase) {
+                               qq = false
+                           } else {
+                               qq = true
+                           }
+                           const send = {
+                               cover: e.featured_image,
+                               item_key: e.item_key,
+                               title: e.name,
+                               regular_price: e.price_regular,
+                               price: e.price,
+                               qq,
+                               quantity: e.quantity,
+                           }
+                           console.log(send)
+                           home_more.append(product_big(send))
+                       })
+                   }
+               } catch (error) {
+                   console.log(error)
+               }
+           }
+           run2()
+       })
+       ///on remove click 
+   $(document).on('click', '.addtocart.Remove.big', function() {
+           const key = $(this).attr('id');
+           async function run2() {
+               try {
+                   console.log(true)
+                   const loader = $('.loader');
+                   const totalsx = $('.totals-checkout');
+                   loader.show()
+                   const cart_key = get('cart_key');
+                   const data = await cocart('/cart/item/' + key + '?cart_key=' + cart_key, 'DELETE')
+                   await totals()
+                   console.log(data)
+                   if (data.items[0]) {} else {
+                       totalsx.hide();
+                   }
+                   $('.big[id="' + key + '"]').remove()
+                   loader.hide()
+                   await count()
+               } catch (error) {
+                   console.log(error)
+               }
+           }
+           run2()
+       })
+       //////////////
+       ///////////////
+       //////////////
+
+   $(document).on(
+       'click', '.ggqq',
+       async function() {
+           try {
+               const type = $(this).attr('type');
+               const id = $(this).attr('id');
+               const loader = $('.loader');
+               const input = $('input[id="' + id + '"]');
+               const value = Number(input.val())
+               var count;
+               if (type === "remove") {
+                   count = value - 1;
+                   if (count < 1) {
+                       count = 1
+                   } else {
+                       count = value - 1;
+                       input.val(count)
+                   }
+               } else {
+                   count = value + 1;
+                   input.val(count)
+               }
+               const cart_key = get('cart_key');
+               loader.show()
+               const data = await cocart(`/cart/item/${id}?quantity=${count}&cart_key=${cart_key}`, "POST");
+               await totals()
+               console.log(data, count, id, type)
+               loader.hide()
+               await count()
+
+           } catch (error) {
+               console.log(error)
+           }
+       }
+   )
+
+   //////////////////
+   ////////////////
+   //////////////
+   ////////////////
