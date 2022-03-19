@@ -9,7 +9,7 @@
     <script src="scripts/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="scripts/database.js"></script>
-    <link rel="stylesheet" href="style.css?clear=7">
+    <link rel="stylesheet" href="style.css?clear=8">
     <script src="scripts/query.js"></script>
     <script src="scripts/firebase-app.js"></script>
     <script src="scripts/firebase-analytics.js"></script>
@@ -17,6 +17,7 @@
     <script src="scripts/firebase-messaging.js"></script>
     <script src="scripts/firebase-auth.js"></script>
     <script src="scripts/firebase.js"></script>
+
     <style>
         .menu {
             display: flex;
@@ -120,6 +121,43 @@
             border-radius: 10px;
         }
     </style>
+    <style>
+        form.checkout-form {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            gap: 10px;
+        }
+        
+        form.checkout-form input {
+            padding: 10px 15px;
+            border: unset;
+            background: var(--c4);
+            font-size: 1rem;
+            line-height: 1.5rem;
+            font-family: var(--f3);
+            border-radius: 5px;
+            FONT-WEIGHT: 600;
+            color: var(--c1);
+        }
+        
+        form.checkout-form input::placeholder {
+            color: hsl(228deg 12% 40%);
+        }
+        
+        form.checkout-form input.submit-input {
+            background: var(--c3);
+            color: var(--c2);
+            FONT-WEIGHT: 800;
+            font-family: var(--f1);
+            margin-top: 10px;
+        }
+        
+        div#map {
+            height: 250px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
@@ -175,7 +213,7 @@
             <div class="totals">
 
             </div>
-            <div class="checkout">
+            <div page="checkout" class="pagex checkout">
                 Checkout
             </div>
         </div>
@@ -185,6 +223,79 @@
     <div id="profile" style="display: none;" class="page">
     </div>
     <div id="logs" style="display: none;" class="page">
+    </div>
+    <div id="checkout" style="display: none;" class="page checkout-page">
+        <form action="" class="checkout-form">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="tel" name="phone" placeholder="Phone Number" minlength="11" maxlength="11" required>
+            <input type="tel" name="whatsapp" placeholder="Whatsapp Number" minlength="11" maxlength="11" required>
+            <input type="email" value="syeramusic@gmail.com" name="email" disabled required>
+            <div id="map"></div>
+
+            <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFSg1XYnpeQUcxeu6HNacuJmArhGYY6PM&callback=initMap&v=weekly" async></script>
+            <script>
+                function handlePermission() {
+                    navigator.permissions.query({
+                        name: 'geolocation'
+                    }).then(function(result) {
+                        if (result.state == 'granted') {
+                            report(result.state);
+                            initMap()
+                        } else if (result.state == 'prompt') {
+                            report(result.state);
+                            navigator.geolocation.getCurrentPosition(revealPosition, positionDenied, geoSettings);
+                        } else if (result.state == 'denied') {
+                            report(result.state);
+                        }
+                        result.onchange = function() {
+                            report(result.state);
+                        }
+                    });
+                }
+
+                function report(state) {
+                    console.log('Permission ' + state);
+                }
+
+                handlePermission();
+                const mmdata = {
+                    center: {
+                        lat: 33.5839232,
+                        lng: 73.0202112
+                    },
+                    zoom: 8
+                };
+
+                function geolocation() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                const pos = {
+                                    lat: position.coords.latitude,
+                                    lng: position.coords.longitude,
+                                };
+                                map.setCenter(pos);
+                                marker.setPosition(pos);
+                                marker.open(map);
+                            }
+                        );
+                    }
+                }
+
+                function initMap() { // now it IS a function and it is in global
+                    map = new google.maps.Map(document.getElementById('map'), mmdata);
+                    marker = new google.maps.Marker({
+                        map,
+                        draggable: true,
+                        animation: google.maps.Animation.DROP,
+                        position: mmdata.center,
+                    });
+                    geolocation()
+                }
+            </script>
+            <input type="submit" value="Lets Go" class="submit-input">
+        </form>
     </div>
     <div style="display: none;" class="mini loader bottom-fixed">
         <div class="spinner">
@@ -218,7 +329,7 @@
                 Fav
             </div>
         </div>
-        <div class="menu-icon">
+        <div page="checkout" class="pagex menu-icon">
             <span class="material-icons">
                 receipt_long
             </span>
