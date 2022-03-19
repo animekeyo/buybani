@@ -113,7 +113,7 @@ input:focus-visible {
     FONT-WEIGHT: 500;
     letter-spacing: 1px;
     color: var(--c1);
-    position: sticky;
+    /* position: sticky; */
     top: 137px;
     background: var(--c2);
     z-index: 10;
