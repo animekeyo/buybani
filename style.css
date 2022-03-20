@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fredoka:wght@300;400;500;600;700&family=Jost:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('/fonts/facebook/style.css');
 :root {
     --f1: 'Fredoka', sans-serif;
     --f2: 'Bebas Neue', cursive;
     --f3: 'Jost', sans-serif;
+    --f4: 'Facebook', sans-serif;
     --c1: white;
     --c2: black;
     --c3: #1ed760;
@@ -344,6 +346,7 @@ input:focus-visible {
     align-items: flex-start;
     gap: 10px;
     margin: 10px;
+    margin-top: unset;
 }
 
 .products.flex-down.home-more {
