@@ -258,7 +258,7 @@
             <input type="tel" name="whatsapp" placeholder="Whatsapp (Optional)" minlength="11" maxlength="11">
             <input type="email" value="syeramusic@gmail.com" name="email" disabled required>
             <div class="box-inn">
-                <span onclick="initMap();" class="material-icons getlocation-button">my_location</span>
+                <span onclick="geolocation();" class="material-icons getlocation-button">my_location</span>
                 <div class="disable-input">
                     <input class="address-remove" type="text" placeholder="Street address" name="address" required>
                 </div>
@@ -268,30 +268,7 @@
             <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFSg1XYnpeQUcxeu6HNacuJmArhGYY6PM&callback=initMap&v=weekly" async></script>
             <script>
-                function handlePermission() {
-                    navigator.permissions.query({
-                        name: 'geolocation'
-                    }).then(function(result) {
-                        if (result.state == 'granted') {
-                            report(result.state);
-                            initMap()
-                        } else if (result.state == 'prompt') {
-                            report(result.state);
-                            navigator.geolocation.getCurrentPosition(revealPosition, positionDenied, geoSettings);
-                        } else if (result.state == 'denied') {
-                            report(result.state);
-                        }
-                        result.onchange = function() {
-                            report(result.state);
-                        }
-                    });
-                }
-
-                function report(state) {
-                    console.log('Permission ' + state);
-                }
-
-                handlePermission();
+                geolocation()
                 const mmdata = {
                     center: {
                         lat: 33.5839232,
@@ -311,7 +288,6 @@
                                 };
                                 map.setCenter(pos);
                                 marker.setPosition(pos);
-                                marker.open(map);
                             }
                         );
                     }
@@ -321,11 +297,13 @@
                     map = new google.maps.Map(document.getElementById('map'), mmdata);
                     marker = new google.maps.Marker({
                         map,
-                        draggable: true,
-                        animation: google.maps.Animation.DROP,
+                        draggable: false,
                         position: mmdata.center,
                     });
                     geolocation()
+                    map.addListener('center_changed', () => {
+                        marker.setPosition(map.getCenter())
+                    })
                 }
             </script>
             <input type="submit" value="Lets Go" class="submit-input">
