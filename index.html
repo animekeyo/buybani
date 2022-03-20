@@ -34,7 +34,7 @@
             bottom: 0;
             width: calc(100% - 20px);
             z-index: 10;
-            box-shadow: 0px -1px 0px 0px #0f121d;
+            box-shadow: 0px -2px 0px 0px #0f121d;
         }
         
         .menu-icon.selected span.material-icons {
@@ -156,6 +156,7 @@
         div#map {
             height: 300px;
             border-radius: 5px;
+            background-color: var(--c4);
         }
         
         .box-inn {
@@ -183,6 +184,13 @@
         .disable-input {
             width: calc(100% - 55px);
             position: relative;
+        }
+        
+        .box-inn .profile {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--c4);
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -253,17 +261,24 @@
     </div>
     <div id="checkout" style="display: none;" class="page checkout-page">
         <form action="" class="checkout-form">
+            <div class="box-inn">
+                <div class="profile">
+
+                </div>
+                <div class="disable-input">
+                    <input type="text" class="account-email" disabled name="email" required>
+                </div>
+            </div>
             <input type="text" name="name" placeholder="Full Name" required>
             <input type="tel" name="phone" placeholder="Phone Number" minlength="11" maxlength="11" required>
             <input type="tel" name="whatsapp" placeholder="Whatsapp (Optional)" minlength="11" maxlength="11">
-            <input type="email" value="syeramusic@gmail.com" name="email" disabled required>
+            <div id="map"></div>
             <div class="box-inn">
                 <span onclick="geolocation();" class="material-icons getlocation-button">my_location</span>
                 <div class="disable-input">
                     <input class="address-remove" type="text" placeholder="Street address" name="address" required>
                 </div>
             </div>
-            <div id="map"></div>
 
             <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFSg1XYnpeQUcxeu6HNacuJmArhGYY6PM&callback=initMap&v=weekly" async></script>
@@ -372,7 +387,7 @@
     <script>
         const pointer = `<span class="pointer material-icons"> near_me </span>`;
     </script>
-    <script src="scripts/index.js?clear=2"></script>
+    <script src="scripts/index.js?clear=3"></script>
 </body>
 
 </html>

@@ -281,9 +281,12 @@
        const ll_div = $('.login-with-google');
        await run()
        if (user) {
+
            const userx = firebase.database().ref('users').child(user.uid)
            const avatar = await userx.child('avatar').once('value');
-
+           if (user.email) {
+               $('.account-email').val(user.email)
+           }
            if (avatar.exists()) {
                $('.profile').css('background-image', `url(${avatar.val()})`)
                $('html')
