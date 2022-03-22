@@ -160,18 +160,45 @@
         <div class="before">${data.regular_price}</div>`
                csstitle = '';
            }
-           return `<div class="product mini">
-    <div style="background-image: url(${data.cover});" class="cover">
+           return `<div  class="product mini">
+    <div onclick="item(${data.id})" style="background-image: url(${data.cover});" class="cover">
     </div>
-    <div ${csstitle} class="product-title mini">${data.title}</div>
-    <div class="price mini">${price}</div>
+    <div ${csstitle} onclick="item(${data.id})" class="product-title mini">${data.title}</div>
+    <div onclick="item(${data.id})" class="price mini">${price}</div>
     <div onclick="addtocart(${data.id},1)" class="addtocart mini">Add to cart</div>
 </div>`
        }
    }
 
 
+   async function item(id) {
+       try {
+           const title = $('.preview-title');
+           const decs = $('.preview-decs');
+           const images = $('.preview-images');
+           const after = $('.after.preview');
+           const before = $('.before.preview');
+           images.empty();
+           decs.empty();
+           title.empty();
+           before.hide()
+           after.hide()
+           $('.view-page').trigger('click')
+           const data = await cocart(`/products/${id}`);
+           console.log(data)
+           title.text(data.name);
+           decs.html(data.description)
+           before.show().text(data.prices.regular_price)
+           after.show().text(data.prices.price)
+           data.images.forEach(e => {
+               const img = e.src.custom;
+               images.append(`<div class="preview-img" style="background-image: url(${img});"></div>`);
+           });
 
+       } catch (error) {
+           console.log(error)
+       }
+   }
    async function count() {
        try {
            var data;

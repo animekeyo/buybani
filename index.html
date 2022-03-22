@@ -17,7 +17,6 @@
     <script src="scripts/firebase-messaging.js"></script>
     <script src="scripts/firebase-auth.js"></script>
     <script src="scripts/firebase.js"></script>
-
     <style>
         .menu {
             display: flex;
@@ -207,12 +206,14 @@
         }
         
         .preview-img {
-            background: var(--c4);
+            background-color: var(--c4);
             width: 250px;
             height: 250px;
             border-radius: 5px;
             aspect-ratio: 1;
             scroll-snap-align: center;
+            background-size: cover;
+            background-position: center;
         }
         
         .preview-img:first-child {
@@ -239,11 +240,6 @@
         .preview-decs {
             font-size: 1rem;
             line-height: 1.1rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
         }
         
         .preview-details .price.big.mini {
@@ -255,11 +251,18 @@
             font-size: 1.7rem;
             line-height: 1.7rem;
         }
+        
+        .preview-details .product-addtional-data {
+            position: sticky;
+            bottom: 71px;
+            background: var(--c2);
+            box-shadow: 0px 0px 0px 9px var(--c2);
+        }
     </style>
 </head>
 
 <body>
-    <div id="home" style="display: none;" class="page">
+    <div id="home" style="display: none;" class="page true">
         <header>
 
             <div class="back&h1">
@@ -293,7 +296,7 @@
 
         </div>
     </div>
-    <div id="view" style="display: none;" class="page true">
+    <div id="view" style="display: none;" class="page">
         <header class="cart-header">
             <div class="back&h1">
                 <span page="home" class="material-icons backtohome pagex">
@@ -305,34 +308,14 @@
             </div>
             <span page="cart" class="pagex material-icons shopping_cart">shopping_cart</span>
         </header>
-        <div class="preview-images">
-            <div class="preview-img">
-
-            </div>
-            <div class="preview-img">
-
-            </div>
-            <div class="preview-img">
-
-            </div>
-            <div class="preview-img">
-
-            </div>
-            <div class="preview-img">
-
-            </div>
-        </div>
+        <div class="preview-images"></div>
         <div class="preview-details">
-            <div class="preview-title">Sony Xperia 1 - 64GB Storage - 6GB RAM | Non-PTA Approved - Gaming Phone - Refurbished</div>
+            <div class="preview-title"></div>
             <div class="price big mini">
-                <div class="after">19999</div>
-                <div class="before">19999</div>
+                <div class="after preview">19999</div>
+                <div class="before preview">19999</div>
             </div>
-            <div class="preview-decs">General Features Release Date 2021-12-09 SIM Support Dual Sim, Dual Standby (Nano-SIM) Phone Dimensions 171.4 x 77.3 x 9.1 mm Phone Weight N/A Operating System Android 11 OS Display Screen Size 6.8 inches Screen Resolution 720 x 1640 pixels
-                Screen Type HD + Dot Notch Display Screen Protection N/A Memory Internal Memory 64 GB RAM 4 GB Card Slot microSD Card, (supports up to 128GB) Performance Processor MediaTek Helio G25 (12 nm) GPU PowerVR GE8320 Battery Type (Li-Po Non removable),
-                6000 mAh Camera Front Camera 8 MP Front Flash Light Yes Front Video Recording 1080p@30fps Back Flash Light Yes Back Camera 13 MP Back Video Recording 1080p@30fps Connectivity Bluetooth Yes 3G Yes 4G/LTE Yes 5G No Radio Yes WiFi Yes NFC
-                No
-            </div>
+            <div class="preview-decs"></div>
             <div id="" class="product-addtional-data big">
                 <div class="addtocart mini big">Add to Cart</div>
                 <form action="" method="post" class="for-product-addtional">
@@ -498,10 +481,13 @@
             </div>
         </div>
     </div>
+    <div style="display: none;" class="pagex view-page" page="view">
+
+    </div>
     <script>
         const pointer = `<span class="pointer material-icons"> near_me </span>`;
     </script>
-    <script src="scripts/index.js?clear=3"></script>
+    <script src="scripts/index.js?clear=4"></script>
 </body>
 
 </html>
