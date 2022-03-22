@@ -193,12 +193,19 @@
            const data = await cocart(`/products/${id}`);
            console.log(data)
            images.empty();
+           console.log(data.description.length)
+           var description;
+           if (data.description.length === 0) {
+               description = ``
+           } else {
+               description = `<div class="preview-decs">${data.description}</div>`
+           }
            const theme = ` <div class="preview-title">${data.name}</div>
            <div class="price big mini">
                <div class="after preview">${data.prices.price}</div>
                <div class="before preview">${data.prices.regular_price}</div>
            </div>
-           <div class="preview-decs">${data.description}</div>
+           ${description}
            <div id="" class="product-addtional-data big">
                <div class="addtocart mini big">Add to Cart</div>
                <form action="" method="post" class="for-product-addtional">
@@ -208,10 +215,18 @@
                </form>
            </div>`
            details.html(theme)
-           data.images.forEach(e => {
-               const img = e.src.custom;
-               images.append(`<div class="preview-img" style="background-image: url(${img});"></div>`);
-           });
+           if (data.images.length === 1) {
+               data.images.forEach(e => {
+                   const img = e.src.custom;
+                   images.append(`<div class="preview-img big" style="background-image: url(${img});"></div>`);
+               });
+           } else {
+               data.images.forEach(e => {
+                   const img = e.src.custom;
+                   images.append(`<div class="preview-img" style="background-image: url(${img});"></div>`);
+               });
+           }
+
 
        } catch (error) {
            console.log(error)
