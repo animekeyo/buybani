@@ -158,6 +158,18 @@
             height: 300px;
             border-radius: 5px;
             background-color: var(--c4);
+            position: relative;
+        }
+        
+        div#map:after {
+            content: "";
+            background-image: url(https://cdn.discordapp.com/attachments/814549641353363516/954976781176307722/gridicons_location_3.svg);
+            --width: 34px;
+            height: var(--width);
+            width: var(--width);
+            position: absolute;
+            top: calc(50% - var(--width));
+            left: calc(50% - var(--width) - -16px);
         }
         
         .box-inn {
@@ -547,6 +559,8 @@
                                 marker.setPosition(pos);
                             }
                         );
+                    } else {
+                        navigator.geolocation
                     }
                 }
 
@@ -557,7 +571,7 @@
                         draggable: false,
                         position: mmdata.center,
                         title: "marker",
-                        icon: 'https://cdn.discordapp.com/attachments/814549641353363516/954976781176307722/gridicons_location_3.svg',
+                        icon: 'https://cdn.discordapp.com/attachments/866701680884449300/955829744904052777/gridicons_location.png',
                     });
                     geolocation()
                     map.addListener('center_changed', () => {
