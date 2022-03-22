@@ -300,10 +300,32 @@
             height: auto;
         }
     </style>
+    <style>
+        .category-item {
+            color: var(--c1);
+            display: flex;
+            gap: 15px;
+            padding: 20px 20px;
+            background: var(--c4);
+            font-size: 1rem;
+            line-height: 1.4rem;
+            FONT-WEIGHT: 400;
+            letter-spacing: 0.2px;
+            border-radius: 5px;
+        }
+        
+        .category-list {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding-top: 5px;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="home" style="display: none;" class="page true">
+    <div id="home" style="display: none;" class="page">
         <header>
 
             <div class="back&h1">
@@ -354,6 +376,53 @@
 
         </div>
     </div>
+    <div id="category" class="page true">
+        <header class="cart-header">
+            <div class="back&h1">
+                <span page="home" class="material-icons backtohome pagex">
+                arrow_back
+            </span>
+                <h1 page="home" class="pagex">
+                    Category
+                </h1>
+            </div>
+            <span page="cart" class="pagex material-icons shopping_cart">shopping_cart</span>
+        </header>
+        <div class="category-list">
+            <div class="category-item">
+                <span class="material-icons">
+                        devices
+                    </span>
+                <div class="text-cc">
+                    Devices
+                </div>
+            </div>
+            <div class="category-item">
+                <span class="material-icons">
+                    fastfood
+                    </span>
+                <div class="text-cc">
+                    Fast Food
+                </div>
+            </div>
+            <div class="category-item">
+                <span class="material-icons">
+                    checkroom
+                    </span>
+                <div class="text-cc">
+                    Clothes
+                </div>
+            </div>
+            <div class="category-item">
+                <span class="material-icons">
+                    headphones
+                    </span>
+                <div class="text-cc">
+                    Headphones
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="cart" style="display: none;" class="page">
         <header class="cart-header">
             <div class="back&h1">
@@ -361,7 +430,7 @@
                 arrow_back
             </span>
                 <h1 page="home" class="pagex">
-                    buybani
+                    Cart
                 </h1>
             </div>
         </header>
@@ -475,7 +544,7 @@
                 Store
             </div>
         </div>
-        <div class="menu-icon">
+        <div page="category" class="pagex menu-icon">
             <span class="material-icons">
                 auto_awesome_motion
             </span>
@@ -515,7 +584,7 @@
     <script>
         const pointer = `<span class="pointer material-icons"> near_me </span>`;
     </script>
-    <script src="scripts/index.js?clear=7"></script>
+    <script src="scripts/index.js?clear=8"></script>
 </body>
 
 </html>
