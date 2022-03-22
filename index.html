@@ -256,7 +256,43 @@
             position: sticky;
             bottom: 71px;
             background: var(--c2);
+            gap: 10px;
             box-shadow: 0px 0px 0px 9px var(--c2);
+        }
+        
+        .preview-title.fake {
+            width: 100%;
+            height: 25px;
+            background: var(--c4);
+            border-radius: 5px;
+            animation: changeColor 0.7s infinite alternate;
+        }
+        
+        .preview-img.fake {
+            animation: changeColor 0.7s infinite alternate;
+        }
+        
+        .preview-decs.fake {
+            width: 100%;
+            height: 50px;
+            background: var(--c4);
+            border-radius: 5px;
+            animation: changeColor 0.7s infinite alternate;
+        }
+        
+        .after-preview-fake,
+        .before-preview-fake {
+            height: 22px;
+            background: var(--c4);
+            width: 102px;
+            border-radius: 5px;
+            animation: changeColor 0.7s infinite alternate;
+        }
+        
+        .before-preview-fake {
+            margin-top: 5px;
+            height: 19px;
+            width: 83px;
         }
     </style>
 </head>
@@ -310,20 +346,7 @@
         </header>
         <div class="preview-images"></div>
         <div class="preview-details">
-            <div class="preview-title"></div>
-            <div class="price big mini">
-                <div class="after preview">19999</div>
-                <div class="before preview">19999</div>
-            </div>
-            <div class="preview-decs"></div>
-            <div id="" class="product-addtional-data big">
-                <div class="addtocart mini big">Add to Cart</div>
-                <form action="" method="post" class="for-product-addtional">
-                    <span id="" type="remove" class="ggqq material-icons remove-qq">remove</span>
-                    <input id="" type="number" max="10" min="1" value="1" name="" id="">
-                    <span id="" type="add" class="ggqq material-icons add-qq">add</span>
-                </form>
-            </div>
+
         </div>
     </div>
     <div id="cart" style="display: none;" class="page">
@@ -487,7 +510,7 @@
     <script>
         const pointer = `<span class="pointer material-icons"> near_me </span>`;
     </script>
-    <script src="scripts/index.js?clear=4"></script>
+    <script src="scripts/index.js?clear=5"></script>
 </body>
 
 </html>

@@ -173,23 +173,41 @@
 
    async function item(id) {
        try {
-           const title = $('.preview-title');
-           const decs = $('.preview-decs');
            const images = $('.preview-images');
-           const after = $('.after.preview');
-           const before = $('.before.preview');
-           images.empty();
-           decs.empty();
-           title.empty();
-           before.hide()
-           after.hide()
+           const details = $('.preview-details');
+           details.empty()
+           images.html(`<div class="preview-img fake"></div><div class="preview-img fake"></div><div class="preview-img fake"></div>`);
+           details.html(`<div class="preview-title fake"></div>
+         <div class="price big mini">
+             <div class="after-preview-fake"></div>
+             <div class="before-preview-fake"></div>
+         </div>
+         <div class="preview-decs fake"></div>
+         <div class="product-addtional-data big">
+             <div class="addtocart mini big fake"></div>
+             <form action="" method="post" class="for-product-addtional fake">
+             </form>
+         </div>`)
            $('.view-page').trigger('click')
+
            const data = await cocart(`/products/${id}`);
            console.log(data)
-           title.text(data.name);
-           decs.html(data.description)
-           before.show().text(data.prices.regular_price)
-           after.show().text(data.prices.price)
+           images.empty();
+           const theme = ` <div class="preview-title">${data.name}</div>
+           <div class="price big mini">
+               <div class="after preview">${data.prices.price}</div>
+               <div class="before preview">${data.prices.regular_price}</div>
+           </div>
+           <div class="preview-decs">${data.description}</div>
+           <div id="" class="product-addtional-data big">
+               <div class="addtocart mini big">Add to Cart</div>
+               <form action="" method="post" class="for-product-addtional">
+                   <span id="" type="remove" class="ggqq material-icons remove-qq">remove</span>
+                   <input id="" type="number" max="10" min="1" value="1" name="" id="">
+                   <span id="" type="add" class="ggqq material-icons add-qq">add</span>
+               </form>
+           </div>`
+           details.html(theme)
            data.images.forEach(e => {
                const img = e.src.custom;
                images.append(`<div class="preview-img" style="background-image: url(${img});"></div>`);
