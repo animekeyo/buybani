@@ -194,10 +194,71 @@
             border-radius: 5px;
         }
     </style>
+    <style>
+        .preview-images {
+            overflow-x: scroll;
+            overflow-y: hidden;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            gap: 10px;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .preview-img {
+            background: var(--c4);
+            width: 250px;
+            height: 250px;
+            border-radius: 5px;
+            aspect-ratio: 1;
+            scroll-snap-align: center;
+        }
+        
+        .preview-img:first-child {
+            margin-left: 10px;
+        }
+        
+        .preview-img:last-child {
+            margin-right: 10px;
+        }
+        
+        .preview-details {
+            padding: 10px;
+            color: var(--c1);
+            font-family: var(--f4);
+            FONT-WEIGHT: 400;
+            font-size: 1.3rem;
+            line-height: 1.5rem;
+            word-break: break-word;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .preview-decs {
+            font-size: 1rem;
+            line-height: 1.1rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        
+        .preview-details .price.big.mini {
+            font-size: 1.34rem;
+            line-height: 1.34rem;
+        }
+        
+        .preview-details .price.big.mini .after {
+            font-size: 1.7rem;
+            line-height: 1.7rem;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="home" style="display: none;" class="page true">
+    <div id="home" style="display: none;" class="page">
         <header>
 
             <div class="back&h1">
@@ -229,6 +290,56 @@
         </div>
         <div class="products flex-down home-more">
 
+        </div>
+    </div>
+    <div id="view" style="display: none;" class="page true">
+        <header class="cart-header">
+            <div class="back&h1">
+                <span page="home" class="material-icons backtohome pagex">
+                arrow_back
+            </span>
+                <h1 page="home" class="pagex">
+                    buybani
+                </h1>
+            </div>
+            <span page="cart" class="pagex material-icons shopping_cart">shopping_cart</span>
+        </header>
+        <div class="preview-images">
+            <div class="preview-img">
+
+            </div>
+            <div class="preview-img">
+
+            </div>
+            <div class="preview-img">
+
+            </div>
+            <div class="preview-img">
+
+            </div>
+            <div class="preview-img">
+
+            </div>
+        </div>
+        <div class="preview-details">
+            <div class="preview-title">Sony Xperia 1 - 64GB Storage - 6GB RAM | Non-PTA Approved - Gaming Phone - Refurbished</div>
+            <div class="price big mini">
+                <div class="after">19999</div>
+                <div class="before">19999</div>
+            </div>
+            <div class="preview-decs">General Features Release Date 2021-12-09 SIM Support Dual Sim, Dual Standby (Nano-SIM) Phone Dimensions 171.4 x 77.3 x 9.1 mm Phone Weight N/A Operating System Android 11 OS Display Screen Size 6.8 inches Screen Resolution 720 x 1640 pixels
+                Screen Type HD + Dot Notch Display Screen Protection N/A Memory Internal Memory 64 GB RAM 4 GB Card Slot microSD Card, (supports up to 128GB) Performance Processor MediaTek Helio G25 (12 nm) GPU PowerVR GE8320 Battery Type (Li-Po Non removable),
+                6000 mAh Camera Front Camera 8 MP Front Flash Light Yes Front Video Recording 1080p@30fps Back Flash Light Yes Back Camera 13 MP Back Video Recording 1080p@30fps Connectivity Bluetooth Yes 3G Yes 4G/LTE Yes 5G No Radio Yes WiFi Yes NFC
+                No
+            </div>
+            <div id="" class="product-addtional-data big">
+                <div class="addtocart mini big">Add to Cart</div>
+                <form action="" method="post" class="for-product-addtional">
+                    <span id="" type="remove" class="ggqq material-icons remove-qq">remove</span>
+                    <input id="" type="number" max="10" min="1" value="1" name="" id="">
+                    <span id="" type="add" class="ggqq material-icons add-qq">add</span>
+                </form>
+            </div>
         </div>
     </div>
     <div id="cart" style="display: none;" class="page">
@@ -354,10 +465,10 @@
         </div>
         <div class="menu-icon">
             <span class="material-icons">
-                local_offer
+                auto_awesome_motion
             </span>
             <div class="menu-title">
-                Offer
+                Category
             </div>
         </div>
         <div class=" menu-icon">
@@ -365,7 +476,7 @@
                 receipt_long
             </span>
             <div class="menu-title">
-                Orders
+                Receipt
             </div>
         </div>
 
