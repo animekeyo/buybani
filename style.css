@@ -5,12 +5,13 @@
     --f2: 'Bebas Neue', cursive;
     --f3: 'Jost', sans-serif;
     --f4: 'Facebook', sans-serif;
-    --c1: white;
-    --c2: black;
+    --c1: #ffffff;
+    --c2: #000000;
     --c3: #1ed760;
     --c4: #0f121e;
     --c5: #20bd5f;
     --c6: #23a05d;
+    --c7: #171c30;
 }
 
 body {

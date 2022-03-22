@@ -1,0 +1,33 @@
+.addtocart.mini,
+.addtocart.big {
+    background: var(--c4);
+    color: var(--c1);
+    line-height: 0.5rem;
+    font-size: 0.8rem;
+    FONT-WEIGHT: 400;
+    font-family: var(--f4);
+}
+
+.categories.mini {
+    background: var(--c4);
+}
+
+.categorie-count {
+    background: var(--c4);
+    color: var(--c1);
+}
+
+form.for-product-addtional {
+    color: var(--c1);
+    background: var(--c4);
+}
+
+form.for-product-addtional input {
+    color: var(--c1);
+}
+
+.categorie.mini {
+    background: var(--c7);
+    padding: 6px 11px;
+    border: unset;
+}
