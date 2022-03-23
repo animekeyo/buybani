@@ -27,12 +27,13 @@
                } else {
                    bodyxx = '';
                }
-               return fetch('https://www.buybani.com/wp-json/wc/v3' + link, {
+
+               return fetch('https://www.buybani.com/wp-json' + link, {
                    method: type,
                    body: bodyxx,
                }).then(o => o.json())
            } else {
-               return fetch('https://www.buybani.com/wp-json/wc/v3' + link).then(o => o.json())
+               return fetch('https://www.buybani.com/wp-json' + link).then(o => o.json())
            }
        } catch (error) {
            return error
@@ -102,7 +103,7 @@
                id = `id="${data.item_key}"`;
            } else {
                view = '';
-               view2 = `<div class="addtocart View big">View</div>`;
+               view2 = `<div onclick="item(${data.id})" class="addtocart View big">View</div>`;
                id = '';
            }
            var price;
@@ -308,6 +309,7 @@
                home_more.append(product_big(null, true))
            }
            await count()
+               //   /wc/store/products?orderby=popularity
            const categories_data = await cocart('/products/categories?orderby=count&order=asc&hide_empty=true')
            categories_home.empty();
 
@@ -320,7 +322,7 @@
                console.log(e)
                categories_home.prepend(categories(send))
            });
-           const data = await cocart('/products?page=1')
+           const data = await cocart('/products?page=1&orderby=popularity')
            pe.empty()
            data.forEach(e => {
                const send = {
@@ -330,9 +332,20 @@
                    cover: e.images[0].src.thumbnail,
                    title: e.name
                }
-
                pe.prepend(product(send))
            });
+           const datax = await cocart('/products?page=1')
+           home_more.empty()
+           datax.forEach(e => {
+               const send = {
+                   id: e.id,
+                   price: e.prices.price,
+                   regular_price: e.prices.regular_price,
+                   cover: e.images[0].src.thumbnail,
+                   title: e.name
+               }
+               home_more.prepend(product_big(send))
+           })
        } catch (error) {
            console.log(error)
        }
