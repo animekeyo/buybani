@@ -323,8 +323,9 @@
                categories_home.prepend(categories(send))
            });
            const data = await cocart('/products?page=1&orderby=popularity')
+           console.log(data)
            pe.empty()
-           data.forEach(e => {
+           data.products.forEach(e => {
                const send = {
                    id: e.id,
                    price: e.prices.price,
@@ -336,7 +337,7 @@
            });
            const datax = await cocart('/products?page=1')
            home_more.empty()
-           datax.forEach(e => {
+           datax.products.forEach(e => {
                const send = {
                    id: e.id,
                    price: e.prices.price,
